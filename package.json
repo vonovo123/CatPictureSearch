@@ -1,0 +1,19 @@
+{
+  "name": "catpicturesearch",
+  "version": "1.0.0",
+  "description": "Vanilla JS를 이용한 고양이사진 검색 사이트입니다(2020 프로그래머스 데브매칭 과제)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vonovo123/CatPictureSearch.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vonovo123/CatPictureSearch/issues"
+  },
+  "homepage": "https://github.com/vonovo123/CatPictureSearch#readme"
+}

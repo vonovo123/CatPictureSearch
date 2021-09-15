@@ -51,7 +51,6 @@ export default class BaseComponent {
   }
   //이벤트바인드 공통
   bindEvents() {
-    console.log(this.$);
     Object.entries(this).forEach(([fieldName, fieldValue]) => {
       if (fieldName.indexOf('on') === 0) {
         let eventType = fieldName.slice(2).toLowerCase();

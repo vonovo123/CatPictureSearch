@@ -5,5 +5,5 @@ const API_ENDPOINT =
 
 export const api = {
   getRandomCats: () =>
-    fetchData(API_ENDPOINT + '/api/cats/random501', 'getRandomCats'),
+    fetchData(API_ENDPOINT + '/api/cats/random50', 'getRandomCats'),
 };

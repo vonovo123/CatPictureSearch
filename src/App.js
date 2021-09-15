@@ -6,13 +6,12 @@ export default class App extends Component {
     super(target, 'div', { innerHTML: 'test' });
     this.bindEvents();
   }
-  onClick = async (e) => {
-    let data = await this.tryFetchData(api.getRandomCats, {
+
+  onClick = () => {
+    this.tryFetchData(api.getRandomCats, 'test', {
       cb: (data) => {
         return data;
       },
-      errorTypes: ['api'],
     });
-    console.log(data);
   };
 }

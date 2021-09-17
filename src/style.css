@@ -1,26 +1,335 @@
+@font-face{
+  font-family: 'Goyang';
+  src:url('fonts/Goyang.woff') font('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+/**
+box-sizing
+  박스크기를 어떤것을 기준으로 정할 것인가.
+  content-box  : 콘텐트 영역을 기준으로(패딩/마진/테두리 제외한 콘텐트 지정)
+  border-box : 테두리 영역을 기준으로 (모두합한 크기 지정)
+  initial : 기본값으로 설정 
+*/
+html {
+  box-sizing: border-box;
+}
+
+body * {
+  font-family: Goyang;
+}
+
+/**
+  OS 화이트모드일때 색변수
+*/
+ body {
+    --black: #111;
+    --white:  #fff;
+    --primary: #1976d2;
+    --error : #f44336; 
+    --warning :#ff9800;
+    --success: #4caf50;
+    --font: #111;
+    background-color:var(--white);
+    /* text color */
+    color:var(--black);
+    /* body에 margin 값 주기 */
+    margin:20px;
+} 
+/**
+  OS 다크모드일때 색변수
+*/
+@media(prefers-color-scheme:dark){
+  body{
+    --white: #111;
+    --black:  #fff;
+    --primary: #1976d2;
+    --error : #f44336; 
+    --warning :#ff9800;
+    --success: #4caf50;
+  }
+}
+/* 
+  토글버튼을 통해 임의로 변경해야할경우 별도 변수 지정
+*/
+body[data-theme='light'] {
+  --black: #111;
+  --white: #fff;
+  --error: #f44336;
+  --warning: #ff9800;
+  --success: #4caf50;
+}
+
+body[data-theme='dark'] {
+  --black: #fff;
+  --white: #111;
+  --error: #f44336;
+  --warning: #ff9800;
+  --success: #4caf50;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+#App{
+  margin: 1.5em auto;
+  max-width: 1200px;
+  column-gap: 1.5em;
+}
+/* 가상요소 :before :after 
+  모든요소의 
+    box-sizing 은 테두리기준
+    margin padding 없음
+*/
+
+/* 리스트스타일 페딩 제거 */
+ul {
+  padding: 0;
+}
+li {
+  list-style: none;
+}
+.btn {
+  outline :none;
+  /* 배경이미지의 속성 */
+  background: var(--white);
+  cursor : pointer;
+  border : 1px solid;
+  border-radius : 4px;
+  color: var(--font);
+  padding: 0.3em 0.9em;
+  /* 배경색 */
+  background-color: var(--black);
+  border-color: var(--black);
+}
+
+.card {
+  border-radius: 8px;
+  /*컨텐츠 내부의 넘치는 부분은 보이지 않음  */
+  overflow: hidden;
+}
+.img-wrapper{
+  position:relative;
+}
+
+.img-wrapper,
+img {
+  width: 100%;
+  height: 100%;
+}
+/* 
+  position : relative
+  자기 자신을 기준으로 top left right bottom 값에 따라 오프셋 조정
+  absolute : 가장 가까위 위치의 조상요소에 대해 상대적으로 배치
+*/
+.img-placeholder{
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #eee;
+  color: #000;
+  transition: opacity 0.3s;
+  opacity: 1;
+}
+
+img {
+  width : 100%;
+  height: 100%;
+  object-fit:cover;
+  /* 
+    object-fit
+    컨텐트의 크기를 요소에 어떤식으로 조절해 맞출것인지 
+    cover
+    대체 콘텐츠의 가로세로비를 유지하면서, 요소 콘텐츠 박스를 가득 채웁니다. 서로의 가로세로비가 일치하지 않으면 객체 일부가 잘려나갑니다.
+  */
+}
+
+.mb-1 {
+  margin-bottom: 5px;
+}
+.mb-2 {
+  margin-bottom: 10px;
+}
+.mb-3 {
+  margin-bottom: 15px;
+}
+.mb-4 {
+  margin-bottom: 20px;
+}
+.pd-1 {
+  padding: 5px;
+}
+.pd-2 {
+  padding: 10px;
+}
+.pd-3 {
+  padding: 15px;
+}
+.pd-4 {
+  padding: 20px;
+}
+.pd-5 {
+  padding: 25px;
+}
+
+.SearchResult {
+  display : grid;
+  /* repeat(n, A) : A를 n번 반복한다
+    //최소 250 최대 1frm
+    grid-template-columns : ( minMax(250, 1fr), minMax(250, 1fr) , minMax(250, 1fr), minMax(250, 1fr));
+  */
+  grid-template-columns: repeat(4, minmax(250px, 1fr));
+  grid-gap: 20px;
+}
+
+.SearchResult .img-wrapper {
+  height: 300px;
+}
+
+.SearchResult .item-name {
+  position: relative;
+  margin-top: 5px;
+}
+
+.SearchResult .item-name > span {
+  margin: 0 auto;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+@media only screen and (max-width: 992px){
+  .SearchResult {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media only screen and (max-width:768px){
+  .SearchResult{
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media only screen and (max-width:576px){
+  .SearchResult{
+    grid-template-columns: repeat(1, 1fr);
+    margin-bottom: 20px;
+  }
+}
+
+.searchHistory {
+  display: flex;
+}
+.searchHistory .btn{
+ margin-right: 5px;
+}
+
+.Search-cat {
+  display : flex
+}
+
+.Search-cat input {
+  margin-right : 10px;
+  width:100%;
+  font-size: 18px;
+  padding: 10px 15px;
+}
+.Search-cat button {
+  flex : 1 0 auto
+}
+.CatInfoModal .title {
+  display: flex;
+  justify-content: space-between;
+}
+
+
+.CatInfoModal .content-wrapper {
+  background-color: var(--white);
+}
+
+.CatInfoModal .img-wrapper {
+  margin-left: auto;
+  margin-right: auto;
+  width: 300px;
+  height: 300px;
+}
+
+@media only screen and (max-width: 768px) {
+  .ImageInfo .content-wrapper,
+  .content-wrapper .img-wrapper {
+    width: 100%;
+  }
+}
+
+/* 영역을벗어나는 이미지는 숨김 */
+.Carousel {
+  overflow: hidden;
+}
+
+.Carousel-left-arrow,
+.Carousel-right-arrow {
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+}
+
+.Carousel-right-arrow {
+  right: 0;
+}
+
+.Carousel-slides {
+  display: flex;
+  width: 100%;
+}
+.Carousel-slide {
+  list-style: none;
+  width:20%;
+  display: block;
+  flex: 1 0 auto;
+}
+/* object-fit 이미지를 상위요소 사이즈에 맞춤 */
+/* Object-position 상위요소 내에서 이미지 위치 */
+.Carousel img {
+  object-fit: fill;
+  object-position: center;
+}
+
 /* loading css */
 .loading {
+  /* fixed : 뷰포트에 상대적으로 배치되기때문에 스크롤되어도 항상 같은위치
+    top/left/right/bottom으로 위치 지정
+  */
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.6);
+  bottom: 0; 
+  /* 하위요소 가운데 정렬 */
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: row;
+  /*배경색  */
+  background-color: rgba(0, 0, 0, 0.6);
 }
 
 .loading-dot {
-  display: inline-block;
+  /* inline처럼 한줄에 들어가지만 높낮이 지정가능 */
+  /*  */
   background: linear-gradient(-90deg, #666, #999, #bbb, #fff);
-  background-size: 600% 600%;
-  animation: gradient 1s infinite, flick 1s infinite;
-  line-height: 1;
-  vertical-align: middle;
   width: 15px;
   height: 15px;
   border-radius: 100%;
+  background-size: 600% 600%;
+  line-height: 1;
+  animation: gradient 1s infinite, flick 1s infinite;
   background-color: #000;
 }
 .loading-dot:nth-child(2) {
@@ -56,4 +365,49 @@
   50% {
     opacity: 1;
   }
+}
+
+/* transform:transelate +- x y 만큼 이동 */
+.ErrorMessage {
+  color : white;
+  font-weight: bold;
+  font-size: 18px;
+  background-color: var(--warning);
+  position: fixed;
+  z-index: 1001;
+  top: 100px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.CriticalErrorMessage {
+  background-color: var(--error);
+  color: white;
+  font-weight: bold;
+  position: fixed;
+  z-index: 2000;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0
+}
+/* 모달 뒷배경 */
+.BackDrop {
+  background-color: rgb(0, 0, 0, 0.5);
+  position: fixed;
+  z-Index: 2000;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.fade-in {
+  opacity: 1 !important;
+}
+
+.fade-out {
+  opacity: 0 !important;
 }

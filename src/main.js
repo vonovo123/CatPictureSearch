@@ -1,3 +1,3 @@
 import App from './App.js';
-//const app = new App([document.querySelector('#App'), 'afterend']);
-const app = new App(document.querySelector('#App'));
+const app = new App(document.querySelector('body'));
+app.render();

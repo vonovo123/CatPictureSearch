@@ -15,7 +15,6 @@ class Store {
     this.publish(context);
   }
   get(context) {
-    console.log(this.store);
     return this.store[context];
   }
 

@@ -134,4 +134,8 @@ export default class Component extends BaseComponent {
       },
     };
   }
+
+  subscribe = (context) => {
+    store.subscribe(context, this);
+  };
 }

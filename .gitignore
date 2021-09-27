@@ -8,3 +8,4 @@ test.js
 backend/public/apidoc
 coverage
 .history
+.eslintrc.json

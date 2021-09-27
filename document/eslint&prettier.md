@@ -136,3 +136,18 @@ $ npm install --save-dev eslint-plugin-prettier # eslint 기본 포맷 대신 �
      "source.fixAll.eslint": true
 },
 ```
+
+## ESLint가 ES6 ~ 7을 파싱할때 문제가 생기는 경우
+```
+  $npm install babel-eslint --save-dev
+```
+> .eslintrc.json 에 Paser 옵션 추가
+```json
+"parser": "babel-eslint"
+```
+
+## import/export할때 확장자를 입력하면 벨리데이션에 걸리는 경우
+> .eslintrc.json rules에 옵션 추가
+```json
+  "import/extensions": [ "off" ],
+```

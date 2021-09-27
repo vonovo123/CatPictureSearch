@@ -1,9 +1,4 @@
-// test.js
-function init() {
-  const single_q = 'hello world';
-  const double_q = 'hello world';
-  const no_semi = 50;
-  console.log('hello world!');
-}
+import App from './App.js';
 
-init();
+console.log('app is running!!');
+const app = new App(document.querySelector('#app'));

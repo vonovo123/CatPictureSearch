@@ -11,7 +11,6 @@ export default class BaseComponent {
     // 컴포넌트 상위요소와 관련된 특정위치이다.
     if (target instanceof Array) {
       [this.$parent, insertPosition] = target;
-      console.log('insertPosition', insertPosition);
     } else {
       this.$parent = target;
     }
@@ -35,9 +34,6 @@ export default class BaseComponent {
     insertPosition
       ? this.$parent.insertAdjacentElement(insertPosition, this.$)
       : this.$parent.append(this.$);
-
-    console.log(this);
-    console.log(this.$);
   }
 
   // 컴포넌트의 특정 요소에 이벤트 바인딩
@@ -49,7 +45,7 @@ export default class BaseComponent {
     });
   }
 
-  // 상위요소 $parent에 template 삽입
+  // $parent 내부에  template 덮어씀
   HTML($parent, template) {
     // $parent가 없는경우 당 컴포넌트에 template 삽입
     if (!template) {
@@ -59,6 +55,7 @@ export default class BaseComponent {
     $parent.innerHTML = template;
   }
 
+  // $parent 내부에  template 추가
   addHTML($parent, template) {
     // $parent가 없는경우 당 컴포넌트에 template 삽입
     if (!template) {
@@ -66,7 +63,7 @@ export default class BaseComponent {
       $parent = this.$;
     }
     const $temp = document.createElement('div');
-    $temp.innerHTML(template);
-    $parent.append(...$temp);
+    $temp.innerHTML = template;
+    $parent.append(...$temp.childNodes);
   }
 }

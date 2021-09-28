@@ -1,0 +1,62 @@
+/*브라우저가 폰트를 직접 다운받아 사용함*/
+@font-face {
+  font-family: 'Goyang';
+  src: url('/src/fonts/Goyang.woff') format('woff');
+  font-weight : normal;
+  font-style : normal;
+}
+html {
+  box-sizing: border-box;
+}
+body * {
+  margin : 0;
+  font-family: Goyang;
+}
+body {
+  --black: #111;
+  --white: #fff;
+  --primary: #1976d2;
+  --error: #f44336;
+  --warning: #ff9800;
+  --success: #4caf50;
+
+  background-color: var(--white);
+  color : var(--black);
+  margin : 20px;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+ul {
+  padding: 0;
+}
+li {
+  list-style: none;
+}
+
+.ErrorMessage{
+  color : white;
+  font-weight : bold;
+  font-size: 18px;
+  box-shadow: 0 0 3px #aaa;
+  background-color: var(--warning);
+  transition: opacity 0.3s;
+}
+.CriticalErrorMessage{
+  background-color: var(--error);
+  color : white;
+  font-weight: bold;
+}
+.fade-in {
+  opacity: 1 !important;
+}
+
+.fade-out {
+  opacity: 0 !important;
+}

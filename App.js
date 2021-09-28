@@ -1,7 +1,6 @@
-// import Component from './src/js/components/Component.js';
-import BaseComponent from './src/js/components/BaseComponent.js';
+import Component from './src/js/components/Component.js';
 
-export default class App extends BaseComponent {
+export default class App extends Component {
   constructor(target) {
     super(target, 'div', {
       className: 'App',

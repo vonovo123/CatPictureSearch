@@ -1,15 +1,19 @@
+/* eslint-disable consistent-return */
+/* eslint-disable class-methods-use-this */
 /* eslint-disable no-new */
 /* eslint-disable no-useless-constructor */
 import BaseComponent from './BaseComponent.js';
-import { ErrorMessage, CriticalErrorMessage } from '../UI/index.js';
+import { Loading, ErrorMessage, CriticalErrorMessage } from '../UI/index.js';
 
 export default class Component extends BaseComponent {
+  isLoading;
+
   constructor(target, tag, attribute) {
     super(target, tag, attribute);
   }
 
-  // 에러 핸들러
-  static handleError({
+  // 에러 핸들러 start
+  handleError({
     e,
     errorTypes: types,
     showErrorMessage,
@@ -27,6 +31,17 @@ export default class Component extends BaseComponent {
       } else {
         new CriticalErrorMessage(`${e.message} ${e.stack}`);
       }
+    }
+  }
+  // 에러 핸들러 end
+
+  // 예외처리 가능한 비동기 fetch함수를 만든다.
+  async tryFetchData(fetchData, query) {
+    try {
+      const data = fetchData(query);
+      return data;
+    } catch (error) {
+      console.log(error);
     }
   }
 }

@@ -22,9 +22,8 @@ export default class ErrorMessage extends BaseComponent {
     // 개발자 지정 위치가 있으면
 
     if (position) {
-      // 붙일위치 커스텀
+      // 에러위치 커스텀
       const { $parent = document.body, x = 0, y = 0 } = position;
-
       const { bottom, left } = $parent.getBoundingClientRect();
       this.$.style.left = `${left + x}px`;
       this.$.style.top = `${bottom + y}px`;

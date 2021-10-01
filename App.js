@@ -9,11 +9,16 @@ export default class App extends Component {
     });
     this.bindEvents();
     this.getData();
+    console.log('teurn');
   }
 
   getData = async () => {
-    const { data } = await this.tryFetchData(api.getRandomCats);
-    console.log(data);
+    const data = await this.tryFetchData(api.getRandomCats, 'random', {
+      cb: ({ data }) => data,
+      showLoading: true,
+      errorTypes: ['status'],
+      // errorPosition: { $parent: document.body, x: 0, y: 0 },
+    });
   };
 
   onClick = () => {

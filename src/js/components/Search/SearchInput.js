@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 import Component from '../Component.js';
 import api from '../../api/api.js';
 import TypeError from '../../utils/TypeError.js';
@@ -28,14 +29,27 @@ export default class SearchInput extends Component {
     });
   };
 
+  updateSearchHistory = keyword => {
+    const searchHistory = this.get('history', 'local');
+    searchHistory.length === 5 && searchHistory.shift();
+    // console.log(searchHistory.data);
+    this.set([...searchHistory, keyword]).on('history', 'local');
+  };
+
   onKeyUp = e => {
     const keyword = e.target.value;
+
     if (e.keyCode === 13) {
-      this.updateSearchResult(keyword);
+      if (!this.isLoading) {
+        this.updateSearchResult(keyword);
+        this.updateSearchHistory(keyword);
+        this.$.value = '';
+      }
     }
   };
 
   onClick = e => {
+    console.log(this);
     this.$.value = '';
   };
 }

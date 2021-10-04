@@ -55,18 +55,25 @@ export default class Component extends BaseComponent {
     } = options || {};
     // api 캐싱을 위해 apiMethod 저장
     let funcStr = null;
+    // 캐싱을 활용하는 api 조회이면
     if (cache) {
       funcStr = fetchData.toString();
       if (fetchCache.has(funcStr, query)) {
         return fetchCache.get(funcStr, query);
       }
     }
+    // 로딩중에 중복 호출되면 무시
     if (this.isLoading) return;
+    // 로딩 on
     this.isLoading = true;
     const loading = showLoading && new Loading();
+    // fetchData
     try {
       let data = await fetchData(query);
+      // 데이터 전처리
       data = cb(data);
+
+      // 캐시활용 데이터일때 캐싱처리
       if (cache) {
         fetchCache.set(funcStr, query, data);
       }

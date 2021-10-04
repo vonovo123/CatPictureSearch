@@ -1,27 +1,13 @@
 import Component from './src/js/components/Component.js';
 import api from './src/js/api/api.js';
+import Search from './src/js/components/Search/index.js';
 
 export default class App extends Component {
   constructor(target) {
-    super(target, 'div', {
-      className: 'App',
-      styles: { width: '100px', height: '200px', backgroundColor: 'green' },
-    });
-    this.bindEvents();
-    this.getData();
-    console.log('teurn');
+    super(target, 'div', { id: 'app' });
+    // this.bindEvents();
+    // this.getData();
+    // 하위 컴포넌트 정의
+    this.children = [new Search(this.$)];
   }
-
-  getData = async () => {
-    const data = await this.tryFetchData(api.getRandomCats, 'random', {
-      cb: ({ data }) => data,
-      showLoading: true,
-      errorTypes: ['status'],
-      // errorPosition: { $parent: document.body, x: 0, y: 0 },
-    });
-  };
-
-  onClick = () => {
-    console.log('click');
-  };
 }

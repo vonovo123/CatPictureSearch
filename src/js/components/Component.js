@@ -7,7 +7,28 @@
 import BaseComponent from './BaseComponent.js';
 import fetchCache from '../fetchCache.js';
 import { Loading, ErrorMessage, CriticalErrorMessage } from '../UI/index.js';
+import store from '../store.js';
 
+const setData = (data, context, storeType) => {
+  switch (storeType) {
+    case 'local':
+      store.set(context, data);
+      break;
+    case 'web':
+      localStorage.set(context, data);
+      break;
+    default:
+  }
+};
+const getData = (context, storeType) => {
+  switch (storeType) {
+    case 'local':
+      return store.get(context);
+    case 'web':
+      return localStorage.get(context);
+    default:
+  }
+};
 export default class Component extends BaseComponent {
   isLoading;
 
@@ -86,5 +107,29 @@ export default class Component extends BaseComponent {
       loading && loading.$.remove();
       this.isLoading = false;
     }
+  }
+
+  set(data) {
+    return {
+      on: (context, storeTypes) => {
+        if (typeof storeTypes === 'string') {
+          setData(data, context, storeTypes);
+          return;
+        }
+        if (Array.isArray(storeTypes)) {
+          storeTypes.forEach(storeType => {
+            setData(data, context, storeType);
+          });
+        }
+      },
+    };
+  }
+
+  get(context, storeType) {
+    return getData(context, storeType);
+  }
+
+  subscribe(context) {
+    store.subscribe(context, this);
   }
 }

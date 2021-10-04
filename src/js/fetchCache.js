@@ -10,10 +10,6 @@ class FetchCache {
   }
 
   set(context, key, value) {
-    console.log(this.cache[context]);
-    console.log(key);
-    console.log(value);
-
     if (this.cache[context]) {
       // 이미 있으면 덮어쓰기
       this.cache[context][key] = value;

@@ -27,12 +27,14 @@ export default class SearchInput extends Component {
       cache: true,
       errorTypes: ['api', 'data'],
     });
+    if (data) {
+      this.set(data).on('search-result', ['local', 'web']);
+    }
   };
 
   updateSearchHistory = keyword => {
     const searchHistory = this.get('history', 'local');
     searchHistory.length === 5 && searchHistory.shift();
-    // console.log(searchHistory.data);
     this.set([...searchHistory, keyword]).on('history', 'local');
   };
 

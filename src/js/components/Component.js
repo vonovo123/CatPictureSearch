@@ -8,6 +8,7 @@ import BaseComponent from './BaseComponent.js';
 import fetchCache from '../fetchCache.js';
 import { Loading, ErrorMessage, CriticalErrorMessage } from '../UI/index.js';
 import store from '../store.js';
+import localStorage from '../utils/LocalStorage.js';
 
 const setData = (data, context, storeType) => {
   switch (storeType) {
@@ -15,7 +16,7 @@ const setData = (data, context, storeType) => {
       store.set(context, data);
       break;
     case 'web':
-      localStorage.set(context, data);
+      localStorage.set(`dev-matching-${context}`, data);
       break;
     default:
   }
@@ -25,7 +26,7 @@ const getData = (context, storeType) => {
     case 'local':
       return store.get(context);
     case 'web':
-      return localStorage.get(context);
+      return localStorage.get(`dev-matching-${context}`);
     default:
   }
 };

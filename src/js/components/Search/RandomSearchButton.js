@@ -17,7 +17,9 @@ export default class RanomSearchButton extends Component {
       cache: false,
       errorTypes: ['api'],
     });
-    console.log(data);
+    if (data) {
+      this.set(data).on('search-result', ['local', 'web']);
+    }
   };
 
   onClick = async () => {

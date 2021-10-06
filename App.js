@@ -1,5 +1,5 @@
 import Component from './src/js/components/Component.js';
-import api from './src/js/api/api.js';
+
 import Search from './src/js/components/Search/index.js';
 
 export default class App extends Component {

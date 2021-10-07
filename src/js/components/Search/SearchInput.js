@@ -40,12 +40,13 @@ export default class SearchInput extends Component {
 
   onKeyUp = e => {
     const keyword = e.target.value;
-
-    if (e.keyCode === 13) {
-      if (!this.isLoading) {
-        this.updateSearchResult(keyword);
-        this.updateSearchHistory(keyword);
-        this.$.value = '';
+    if (keyword !== '') {
+      if (e.keyCode === 13) {
+        if (!this.isLoading) {
+          this.updateSearchResult(keyword);
+          this.updateSearchHistory(keyword);
+          this.$.value = '';
+        }
       }
     }
   };

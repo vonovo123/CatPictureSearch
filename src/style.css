@@ -56,15 +56,6 @@ li {
   column-gap: 20px;
 }
 
-#App::before{
-  content: "test";
-  display: block;
-  width: 100%;
-  height: 500px;
-  background-color: red;
-  position: absolute;
-  z-index: -1;
-}
 .card{
   border-radius: 8px;
 }
@@ -256,4 +247,35 @@ img {
 }
 .SearchHistory .btn {
  margin-right: 5px;
+}
+
+.Carousel {
+  overflow: hidden;
+}
+
+.Carousel-left-arrow,
+.Carousel-right-arrow {
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+}
+
+.Carousel-right-arrow {
+  right: 0;
+}
+
+.Carousel-slides {
+  display: flex;
+  width: 100%;
+}
+
+.Carousel-slide {
+  list-style: none;
+  display: block;
+  flex: 1 0 auto;
+}
+
+.Carousel img {
+  object-fit: fill;
+  object-position: center;
 }

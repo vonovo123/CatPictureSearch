@@ -6,7 +6,7 @@ export const loadImage = $wrapper => {
   lazyImage.src = lazyImage.dataset.src;
   // img 태그가 로드될때
   lazyImage.onload = () => {
-    // 서서히 사라지는 효과
+    // placeholer 보이지 않도록
     placeholder.classList.add('fade-out');
     placeholder.ontransitionend = () => placeholder.remove();
   };
@@ -37,6 +37,7 @@ export default function lazyLoad(options = {}) {
         threshold,
       }
     );
+    // 모든 사진이 옵저버의 탐지대상이 되도록
     lazyImageWrappers.forEach(wrapper => {
       lazyImageObserver.observe(wrapper);
     });

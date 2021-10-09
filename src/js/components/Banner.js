@@ -20,17 +20,20 @@ export default class Banner extends Component {
       showErrorMessage: false,
     };
     const bannerData = await this.tryFetchData(api.getRandomCats, option);
+
     const slideTemplate = bannerData
-      .map(({ url, name, id }) => {
-        return `<li class="Carousel-slide pd-1 mb-3" id-${id}>
+      ? bannerData
+          .map(({ url, name, id }) => {
+            return `<li class="Carousel-slide pd-1 mb-3" id-${id}>
                 <div class="img-wrapper card lazy">
                   <img data-src=${url} alt=${name}>
                   <div class="img-placeholder"/>
                 </div>
               </li>
             `;
-      })
-      .join('');
+          })
+          .join('')
+      : '';
     // this.HTML(bannerHTML);
 
     const carouselOpt = {

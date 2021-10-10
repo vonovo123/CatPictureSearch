@@ -3,6 +3,7 @@
 /* eslint-disable no-param-reassign */
 import Component from '../components/Component.js';
 import { lazyLoad } from '../utils/index.js';
+import { loadImage } from '../utils/LazyLoad.js';
 
 export default class Carousel extends Component {
   constructor(
@@ -20,6 +21,7 @@ export default class Carousel extends Component {
       `,
     };
     super($target, 'div', option);
+
     this.$slidesWrapper = this.$.querySelector('.Carousel-slides');
     // 슬라이드 진행방향
     this.direction = 'next';
@@ -37,15 +39,41 @@ export default class Carousel extends Component {
     this.index = 0;
     this.slideTo(this.index);
     window.addEventListener('resize', this.handleWindowResize);
+    // autoPlay && this.autoPlay();
     this.bindEvents();
+  }
+
+  transitionOn() {
+    this.$slidesWrapper.style.transition = `transform ${this.duration}ms ease-in-out`;
+  }
+
+  transitionOff() {
+    this.$slidesWrapper.style.transition = '';
+  }
+
+  forceTransitionEnd() {
+    this.$slidesWrapper.transition = '0ms';
+  }
+
+  slideTo(index) {
+    // getBoundingClientRect 뷰포트내 요소의 크기스팩
+    const { width } = this.$slidesWrapper.getBoundingClientRect();
+    // transform : translate3d(x, y ,z) : 요소를 x, y, z 만큼 이동시킨다
+    this.$slidesWrapper.style.transform = `translate3d(${
+      -(width / this.windowSlideSize) * (index + this.windowSlideSize)
+    }px, 0, 0)`;
   }
 
   onClick = e => {
     // button 요소의 type 은 submit
     if (e.target.type !== 'submit') return;
+
     // if (this.interval) {
-    // console.log(this.interval);
+    //   clearInterval(this.autoTimeout);
+
+    //   this.resetInterval && clearInterval(this.resetInterval);
     // }
+
     switch (e.target.className) {
       case 'Carousel-left-arrow btn':
         this.direction = 'prev';
@@ -59,22 +87,51 @@ export default class Carousel extends Component {
     }
   };
 
-  prevSlide() {}
+  prevSlide() {
+    // index 문제 발생시
+    if (this.index === -this.windowSlideSize) {
+      this.forceTransitionEnd();
+      console.log('return');
+      return;
+    }
+    this.transitionOn();
+    this.index -= 1;
+    this.slideTo(this.index);
+    // 시작부분에 도달했을때
+    if (this.index === -this.windowSlideSize) {
+      this.$slidesWrapper.ontransitionend = () => {
+        // easeinout 효과 끄기
+        this.transitionOff();
 
-  slideTo(index) {
-    // getBoundingClientRect 뷰포트내 요소의 크기스팩
-    const { width } = this.$slidesWrapper.getBoundingClientRect();
-    // transform : translate3d(x, y ,z) : 요소를 x, y, z 만큼 이동시킨다
-    this.$slidesWrapper.style.transform = `translate3d(${
-      -(width / this.windowSlideSize) * (index + this.windowSlideSize)
-    }px, 0, 0)`;
+        this.index = this.$slides.length - this.windowSlideSize;
+        this.slideTo(this.index);
+        this.$slidesWrapper.ontransitionend = null;
+      };
+    }
+  }
+
+  nextSlide() {
+    if (this.index === this.$slides.length) {
+      this.forceTransitionEnd();
+      return;
+    }
+    this.transitionOn();
+    this.index += 1;
+    this.slideTo(this.index);
+    if (this.index === this.$slides.length) {
+      this.$slidesWrapper.ontransitionend = () => {
+        this.transitionOff();
+        this.index = 0;
+        this.slideTo(this.index);
+        this.$slidesWrapper.ontransitionend = null;
+      };
+    }
   }
 
   // UI 재수정
   adaptTo(type) {
     let buttonDisplay;
     let windowSlideSize;
-    console.log('type', type);
     switch (type) {
       case 'mobile':
         buttonDisplay = 'none';
@@ -123,7 +180,30 @@ export default class Carousel extends Component {
     this.$slides.forEach($slide => {
       $slide.style.width = this.slideWidth;
     });
-    // this.HTML();
+
+    // 맨앞부터 5개 슬라이드
+    const front = this.$slides.slice(0, this.windowSlideSize);
+    // 무한 슬라이드를 위해 맨뒤에 붙임
+    front.forEach(node => {
+      const $slide = node.cloneNode(true);
+      $slide.id = 'front';
+      this.$slidesWrapper.append($slide);
+    });
+    const back = this.$slides.slice(this.$slides.length - this.windowSlideSize);
+
+    // 무한 슬라이드를 위해 맨앞에 붙임
+    back.reverse().forEach(node => {
+      loadImage(node);
+      const $slide = node.cloneNode(true);
+      $slide.id = 'back';
+      this.$slidesWrapper.insertAdjacentElement('afterbegin', $slide);
+    });
+    // 맨뒤부터 5개 슬라이드
+    // 모바일 모드
+    if (window.matchMedia('(max-width:576px)').matches) {
+      this.adaptTo('mobile');
+      this.isMobile = true;
+    }
     lazyLoad({
       root: this.$,
       rootMargin: '100%',

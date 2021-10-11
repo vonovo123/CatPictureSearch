@@ -95,18 +95,42 @@ img {
   grid-gap: 20px;
 }
 
+/* https://developer.`zilla.org/en-US/docs/Web/CSS/@media/device-width */
+@media only screen and (max-width: 992px) {
+  .SearchResult {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .SearchResult {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media only screen and (max-width: 576px) {
+  .SearchResult {
+    display: block;
+  }
+
+  .SearchResult .img-wrapper {
+    margin-bottom: 20px;
+  }
+}
+
+
+
 .SearchResult .item-name {
   position: relative;
   margin-top: 5px;
 }
 
 .SearchResult .item-name > span {
-  /* 가운데정렬 */
-  display: block;
-  position: relative;
   margin: 0 auto;
+  position: absolute;
   top: 0;
-  text-align: center;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .SearchResult .img-wrapper {

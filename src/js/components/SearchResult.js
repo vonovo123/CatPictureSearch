@@ -1,5 +1,8 @@
+/* eslint-disable no-unused-expressions */
 import Component from './Component.js';
-import { lazyLoad } from '../utils/index.js';
+import { lazyLoad, TypeError } from '../utils/index.js';
+import CatInfoModal from './CatInfoModal.js';
+import api from '../api/api.js';
 
 export default class SearchResult extends Component {
   constructor($target) {
@@ -28,7 +31,22 @@ export default class SearchResult extends Component {
     $item.querySelector('.item-name').textContent = '';
   };
 
-  onClick = e => {};
+  onClick = async e => {
+    const $catCard = e.target.closest('.item');
+    if (!$catCard) return;
+    const catInfo = await this.tryFetchData(api.getCatById, $catCard.id, {
+      cb: ({ data }) => {
+        if (!data)
+          throw new TypeError(
+            '클릭하신 고양이 정보를 불러올수 없습니다.',
+            'data'
+          );
+        return data;
+      },
+      errorTypes: ['api', 'data'],
+    });
+    catInfo && new CatInfoModal(document.body, catInfo);
+  };
 
   createCatCardHTML = cat => `
       <div class="item mb-3" id=${cat.id} data-name=${cat.name}>

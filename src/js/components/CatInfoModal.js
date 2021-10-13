@@ -21,8 +21,27 @@ export default class CatInfoModal extends Modal {
       tabIndex: 0,
       styles: {
         transition: 'opacity 300ms',
-        opacity: 100,
+        opacity: 0,
       },
     });
+    this.$.focus();
+    this.$.classList.add('fade-in');
+    this.bindEvents();
   }
+
+  removeWithFadeOut = () => {
+    this.$.classList.remove('fade-in');
+    this.$.classList.add('fade-out');
+    this.$.ontransitionend = () => this.$.remove();
+  };
+
+  onClick = e => {
+    if (e.taget === this.$.querySelector('.close') || e.target === this.$) {
+      this.removeWithFadeOut();
+    }
+  };
+
+  onKeyDown = e => {
+    e.key === 'Escape' && this.removeWithFadeOut();
+  };
 }

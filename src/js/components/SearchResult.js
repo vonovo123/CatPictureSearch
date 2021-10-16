@@ -1,8 +1,10 @@
+/* eslint-disable import/no-unresolved */
 /* eslint-disable no-unused-expressions */
 import Component from './Component.js';
 import { lazyLoad, TypeError } from '../utils/index.js';
 import CatInfoModal from './CatInfoModal.js';
 import api from '../api/api.js';
+import observeBottomOf from '../utils/observeBottomOf.js';
 
 export default class SearchResult extends Component {
   constructor($target) {
@@ -58,9 +60,36 @@ export default class SearchResult extends Component {
       </div>
   `;
 
+  renderNextCats = async () => {
+    const cats = await this.tryFetchData(api.getRandomCats, {
+      cb: ({ data }) => data,
+      showErrorMessage: false,
+      showLoading: false,
+      errorTypes: ['api'],
+    });
+    if (!cats) {
+      this.renderNextCats();
+      return;
+    }
+    this.addHTML(cats.map(this.createCatCardHTML).join(''));
+  };
+
+  infiniteNextCats = () => {
+    observeBottomOf(this.$, async unobserve => {
+      if (this.isLoading) return;
+      await this.renderNextCats();
+      lazyLoad();
+      // 로직 후 옵져버 삭제
+      unobserve();
+      this.infiniteNextCats();
+    });
+  };
+
   render = () => {
     const data = this.get('search-result', 'local');
     this.HTML(data.map(this.createCatCardHTML).join(''));
     lazyLoad();
+
+    this.infiniteNextCats();
   };
 }

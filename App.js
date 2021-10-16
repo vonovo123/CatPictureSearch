@@ -1,3 +1,4 @@
+import DarkModeToggler from './src/js/components/DarkModeToggler.js';
 import Component from './src/js/components/Component.js';
 import Banner from './src/js/components/Banner.js';
 import Search from './src/js/components/Search/index.js';
@@ -10,6 +11,7 @@ export default class App extends Component {
     // this.getData();
     // 하위 컴포넌트 정의
     this.children = [
+      new DarkModeToggler(this.$),
       new Banner(this.$),
       new Search(this.$),
       new SearchResult(this.$),

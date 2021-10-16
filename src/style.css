@@ -24,6 +24,33 @@ body {
   margin : 20px;
 }
 
+@media (prefers-color-scheme: dark) {
+  body {
+    --black: #fff;
+    --white: #111;
+    --error: #f44336;
+    --warning: #ff9800;
+    --success: #4caf50;
+  }
+}
+
+body[data-theme='light'] {
+  --black: #111;
+  --white: #fff;
+  --error: #f44336;
+  --warning: #ff9800;
+  --success: #4caf50;
+}
+
+body[data-theme='dark'] {
+  --black: #fff;
+  --white: #111;
+  --error: #f44336;
+  --warning: #ff9800;
+  --success: #4caf50;
+}
+
+
 *,
 *:before,
 *:after {

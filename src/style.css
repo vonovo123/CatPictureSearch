@@ -1,0 +1,333 @@
+/*브라우저가 폰트를 직접 다운받아 사용함*/
+@font-face {
+  font-family: 'Goyang';
+  src: url('/src/fonts/Goyang.woff') format('woff');
+  font-weight : normal;
+  font-style : normal;
+}
+html {
+  box-sizing: border-box;
+}
+body * {
+  font-family: Goyang;
+}
+body {
+  --black: #111;
+  --white: #fff;
+  --primary: #1976d2;
+  --error: #f44336;
+  --warning: #ff9800;
+  --success: #4caf50;
+
+  background-color: var(--white);
+  color : var(--black);
+  margin : 20px;
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    --black: #fff;
+    --white: #111;
+    --error: #f44336;
+    --warning: #ff9800;
+    --success: #4caf50;
+  }
+}
+
+body[data-theme='light'] {
+  --black: #111;
+  --white: #fff;
+  --error: #f44336;
+  --warning: #ff9800;
+  --success: #4caf50;
+}
+
+body[data-theme='dark'] {
+  --black: #fff;
+  --white: #111;
+  --error: #f44336;
+  --warning: #ff9800;
+  --success: #4caf50;
+}
+
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+ul {
+  padding: 0;
+}
+li {
+  list-style: none;
+}
+
+.btn {
+  outline : none;
+  background: var(--white);
+  cursor: pointer;
+  border : 1px solid;
+  padding: 0.3em 0.9em;
+  background-color: var(--black);
+  border-color: var(--black);
+  color: var(--white);
+}
+
+#App{
+  margin: 1.5em auto;
+  max-width: 1200px;
+  column-gap: 20px;
+}
+
+.card {
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.img-wrapper {
+  position: relative;
+}
+
+.img-wrapper,
+img {
+  width: 100%;
+  height: 100%;
+}
+
+.img-placeholder {
+  position:absolute;
+  z-index : 2;
+  top : 0;
+  width: 100%;
+  height: 100%;
+  background-color: #eee;
+  color: #000;
+  transition: opacity 0.3s;
+  opacity: 1;
+}
+
+.SearchResult {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(250px, 1fr));
+  grid-gap: 20px;
+}
+
+/* https://developer.`zilla.org/en-US/docs/Web/CSS/@media/device-width */
+@media only screen and (max-width: 992px) {
+  .SearchResult {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .SearchResult {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media only screen and (max-width: 576px) {
+  .SearchResult {
+    display: block;
+  }
+
+  .SearchResult .img-wrapper {
+    margin-bottom: 20px;
+  }
+}
+
+
+
+.SearchResult .item-name {
+  position: relative;
+  margin-top: 5px;
+}
+
+.SearchResult .item-name > span {
+  margin: 0 auto;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.SearchResult .img-wrapper {
+  height: 300px;
+}
+
+.ErrorMessage{
+  color : white;
+  font-weight : bold;
+  font-size: 18px;
+  box-shadow: 0 0 3px #aaa;
+  background-color: var(--warning);
+  transition: opacity 0.3s;
+}
+.CriticalErrorMessage{
+  background-color: var(--error);
+  color : white;
+  font-weight: bold;
+}
+.fade-in {
+  opacity: 1 !important;
+}
+
+.fade-out {
+  opacity: 0 !important;
+}
+
+.loading {
+  position:fixed;
+  top: 0;
+  left: 0;
+  right:0;
+  bottom:0;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.loading-dot{
+  background: linear-gradient(-90deg, #666, #999, #bbb, #fff);
+  background-size: 600% 600%;
+  width: 15px;
+  height: 15px;
+  background-color: #fff;
+  border-radius: 100%;
+  background-color: #000;
+  animation:gradient 1s infinite
+}
+.loading-dot:nth-child(2){
+  animation-delay: .2s;
+}
+
+.loading-dot:last-child{
+  animation-delay: .4s;
+}
+.loading-dot:not(:last-child){
+  margin-right: 5px;
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  10% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes flick {
+  0%,
+  80%,
+  100% {
+    opacity: 0;
+  }
+  30%,
+  50% {
+    opacity: 1;
+  }
+}
+
+.mb-1 {
+  margin-bottom: 5px;
+}
+.mb-2 {
+  margin-bottom: 10px;
+}
+.mb-3 {
+  margin-bottom: 15px;
+}
+.mb-4 {
+  margin-bottom: 20px;
+}
+
+.pd-1 {
+  padding: 5px;
+}
+.pd-2 {
+  padding: 10px;
+}
+.pd-3 {
+  padding: 15px;
+}
+.pd-4 {
+  padding: 20px;
+}
+.pd-5 {
+  padding: 25px;
+}
+
+.Search-cat {
+  display: flex;
+}
+.Search-cat input {
+  margin-right : 10px;
+  width: 100%;
+  font-size : 18px;
+  padding : 10px 15px;
+}
+
+/* 
+  flex : flex-grow  flex-shrink flex-basis
+  flex-basis: 각 아이템의 기본크기 설정 auto 면 컨텐츠의 크기에 따라 자동조정
+  너비랑 같이 설정하고 auto 이면 너비로 맞춰짐
+
+  flex-grow : 0보다 큰 값이 설정되면 남는 가로 여백을 flex-grow 값만큼 각각에 할당한다.
+  flox-shrink : 0이 설정되면 상위요소의 폭이 작아져도 할당된 크기는 줄어들지 않음
+*/
+.Search-cat button {
+  flex-basis: auto;
+  flex-grow : 1;
+  flex-shrink: 0;
+}
+
+.SearchHistory {
+  display: flex;
+}
+.SearchHistory .btn {
+ margin-right: 5px;
+}
+
+.Carousel {
+  overflow: hidden;
+}
+
+.Carousel-left-arrow,
+.Carousel-right-arrow {
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+}
+
+.Carousel-right-arrow {
+  right: 0;
+}
+
+.Carousel-slides {
+  display: flex;
+  width: 100%;
+}
+
+.Carousel-slide {
+  list-style: none;
+  display: block;
+  flex: 1 0 auto;
+}
+
+.Carousel img {
+  object-fit: fill;
+  object-position: center;
+}

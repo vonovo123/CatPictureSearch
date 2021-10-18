@@ -4,7 +4,9 @@
   "description": "Vanilla JS를 이용한 고양이사진 검색 사이트입니다(2020 프로그래머스 데브매칭 과제)",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack --watch",
+    "dev": "webpack-dev-server --hot"
   },
   "repository": {
     "type": "git",
@@ -18,11 +20,15 @@
   "homepage": "https://github.com/vonovo123/CatPictureSearch#readme",
   "devDependencies": {
     "babel-eslint": "^10.1.0",
+    "css-loader": "^5.2.6",
     "eslint": "^7.32.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-import": "^2.24.2",
     "eslint-plugin-prettier": "^4.0.0",
-    "prettier": "2.4.0"
+    "prettier": "2.4.0",
+    "webpack": "^4.44.2",
+    "webpack-cli": "^3.3.0",
+    "webpack-dev-server": "^3.11.0"
   }
 }

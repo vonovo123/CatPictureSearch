@@ -8,3 +8,5 @@ test.js
 backend/public/apidoc
 coverage
 .history
+*.DS_Store
+/dist
